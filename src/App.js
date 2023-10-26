@@ -1,26 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import EventList from './components/EventList';
+import CitySearch from './components/CitySearch';
+import NumberOfEvents from './components/NumberOfEvents';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+	const [eventNumber, setEventNumber] = useState(32);
+
+	const handleEventNumberChange = (value) => {
+		setEventNumber(value);
+	};
+
+	return (
+		<div className='App'>
+			<CitySearch />
+			<NumberOfEvents eventNumber={eventNumber} onEventNumberChange={handleEventNumberChange} />
+			<EventList />
+		</div>
+	);
+};
 
 export default App;
