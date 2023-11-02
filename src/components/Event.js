@@ -1,30 +1,46 @@
-// src/components/Event.js
-
-import { useState } from 'react';
+import { useState } from "react";
+import { getEvents } from "../api";
+import mockData from "../mock-data";
 
 const Event = ({ event }) => {
-	const [showDetails, setShowDetails] = useState(false);
-	const toggleDetails = () => {
-		setShowDetails(!showDetails);
-	};
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  return (
+    <li className="event-list">
+      <div className="event-title">{event.summary}</div>
+      <div>{event.created}</div>
+      <div>{event.location}</div>
+      {/* details are hidden by default */}
+      {isDetailsOpen ? (
+        <details open={true} className="detailsOpened">
+          {event.description}
+        </details>
+      ) : (
+        <details open={false} className="detailsClosed">
+          {event.description}
+        </details>
+      )}
 
-	return (
-		<li>
-			<div className='event'>
-				<h2>{event.summary}</h2>
-				<div className='event-location'>{event.location} </div>
-				<div className='event-dateTime'>{event.created}</div>
-				{showDetails && (
-					<div data-testid='event-description' className='event-description'>
-						{event.description}
-					</div>
-				)}
-				<button className='event-details-btn' onClick={toggleDetails}>
-					{showDetails ? 'Hide Details' : 'Show Details'}
-				</button>
-			</div>
-		</li>
-	);
+      <div className="details-btn">
+        {isDetailsOpen ? (
+          <button
+            onClick={() => {
+              setIsDetailsOpen(false);
+            }}
+          >
+            hide details
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              setIsDetailsOpen(true);
+            }}
+          >
+            show details
+          </button>
+        )}
+      </div>
+    </li>
+  );
 };
 
 export default Event;

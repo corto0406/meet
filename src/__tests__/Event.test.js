@@ -1,26 +1,71 @@
-import { render, screen } from '@testing-library/react';
+import Event from '../components/Event';
+import { render } from '@testing-library/react';
+import mockData from '../mock-data';
 import userEvent from '@testing-library/user-event';
-import NumberOfEvents from '../components/NumberOfEvents';
 
-// Insert the following to have a GUI of the testing
-// screen.logTestingPlaygroundURL()
-describe('<NumberOfEvents /> component', () => {
-	test('NumberOfEvents component textbox is rendered and has default value of 32', () => {
-		render(<NumberOfEvents eventNumber={32} />);
-		const numberTextBox = screen.getByRole('textbox');
-		expect(numberTextBox).toBeInTheDocument();
-		expect(numberTextBox).toHaveValue('32');
-	});
+const mockEvent = mockData.items[0];
 
-	test('ensure components value change function is called when a change in input is typed', async () => {
-		const user = userEvent.setup();
+describe('<Event /> Component', () => {
+  let EventComponent;
+  beforeEach(() => {
+    EventComponent = render(<Event event={mockEvent} />);
+  });
 
-		// Function to use as placeholder of state change call back function
-		const handleEventNumberChange = jest.fn();
 
-		render(<NumberOfEvents eventNumber={32} onEventNumberChange={handleEventNumberChange} />);
-		const numberTextBox = screen.getByRole('textbox');
-		await user.type(numberTextBox, '{backspace}{backspace}10');
-		expect(handleEventNumberChange).toHaveBeenCalled();
-	});
+  test('has the events title', () => {
+    const titleElement = EventComponent.queryByText(mockEvent.summary);
+    expect(titleElement).toBeInTheDocument();
+  });
+
+  test('has the events time', () => {
+    const timeElement = EventComponent.queryByText(mockEvent.created);
+    expect(timeElement).toBeInTheDocument();
+  });
+
+  test('has the events location', () => {
+    const locationElement = EventComponent.queryByText(mockEvent.location);
+    expect(locationElement).toBeInTheDocument();
+  });
+
+  test('has the button "show details"', () => {
+    const button = EventComponent.queryByText('show details');
+    expect(button).toBeInTheDocument();
+  });
+
+  test('by default event details are hidden', () => {
+    const eventDOM = EventComponent.container.firstChild;
+    const details = eventDOM.querySelector('.detailsOpened');
+    expect(details).not.toBeInTheDocument();
+  });
+
+  test('show details after user clicks button "show details"', async () => {
+    const user = userEvent.setup();
+    const button = EventComponent.queryByText('show details');
+    await user.click(button);
+
+    const eventDOM = EventComponent.container.firstChild;
+    const details = eventDOM.querySelector('.detailsOpened');
+    expect(details).toBeInTheDocument();
+  });
+
+  test('hide details after user clicks button "hide details"', async () => {
+    const button = EventComponent.queryByText('show details');
+    const eventDOM = EventComponent.container.firstChild;
+    await userEvent.click(button);
+
+    const hideButton = EventComponent.queryByText('hide details');
+    await userEvent.click(hideButton);
+
+    const details = eventDOM.querySelector('.detailsClosed');
+    expect(details).toBeInTheDocument();
+  });
+
+  test('has the events description', () => {
+    const eventDOM = EventComponent.container.firstChild;
+    const details = eventDOM.querySelector('.detailsOpened');
+    const descriptionElement = EventComponent.queryByText(mockEvent.description);
+    expect(descriptionElement).not.toBeInTheDocument();
+
+  });
 });
+

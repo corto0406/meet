@@ -1,4 +1,4 @@
-import { mockData } from '../src/mock-data';
+import mockData from './mock-data';
 
 /**
  *
@@ -9,9 +9,9 @@ import { mockData } from '../src/mock-data';
  * The Set will remove all duplicates from the array.
  */
 export const extractLocations = (events) => {
-	const extractedLocations = events.map((event) => event.location);
-	const locations = [...new Set(extractedLocations)];
-	return locations;
+  const extractedLocations = events.map((event) => event.location);
+  const locations = [...new Set(extractedLocations)];
+  return locations;
 };
 
 /**
@@ -19,5 +19,5 @@ export const extractLocations = (events) => {
  * This function will fetch the list of all events
  */
 export const getEvents = async () => {
-	return await mockData;
+  return mockData.items;
 };
