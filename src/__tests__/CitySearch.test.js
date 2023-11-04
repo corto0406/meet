@@ -1,9 +1,11 @@
-import { render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import CitySearch from "../components/CitySearch";
-import App from "../App";
 
-import { extractLocations, getEvents } from "../api";
+
+import { render, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import CitySearch from '../components/CitySearch';
+import App from '../App';
+import { extractLocations, getEvents } from '../api';
+
 
 describe("<CitySearch/> component", () => {
   let CitySearchComponent;
@@ -27,7 +29,7 @@ describe("<CitySearch/> component", () => {
     expect(suggestionList).not.toBeInTheDocument();
   });
 
-//   //test 3
+  //   //test 3
 
   test("renders a list of suggestions when city textbox gains focus", async () => {
     // Simulate user clicks on the textbox
@@ -40,13 +42,13 @@ describe("<CitySearch/> component", () => {
     expect(suggestionList).toHaveClass("suggestions");
   });
 
-//   //test 4
+  //   //test 4
 
   test("updates list of suggestions correctly when user types in city textbox", async () => {
     const user = userEvent.setup();
     const allEvents = await getEvents();
     const allLocations = extractLocations(allEvents);
-    
+
     CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
 
     // user types "Berlin" in city textbox
@@ -56,10 +58,10 @@ describe("<CitySearch/> component", () => {
     // filter allLocations to locations matching "Berlin"
     const suggestions = allLocations
       ? allLocations.filter((location) => {
-          return (
-            location.toUpperCase().indexOf(cityTextBox.value.toUpperCase()) > -1
-          );
-        })
+        return (
+          location.toUpperCase().indexOf(cityTextBox.value.toUpperCase()) > -1
+        );
+      })
       : [];
 
     // get all <li> elements inside the suggestion list
@@ -72,14 +74,14 @@ describe("<CitySearch/> component", () => {
     }
   });
 
-//   //test 5
+  //   //test 5
 
   test("renders the suggestion text in the textbox upon clicking on the suggestion", async () => {
     const user = userEvent.setup();
     const allEvents = await getEvents();
     const allLocations = extractLocations(allEvents);
     CitySearchComponent.rerender(
-      <CitySearch allLocations={allLocations} setCurrentCity={() => {}} />
+      <CitySearch allLocations={allLocations} setCurrentCity={() => { }} />
     );
 
     const cityTextBox = CitySearchComponent.queryByRole("textbox");
@@ -94,20 +96,29 @@ describe("<CitySearch/> component", () => {
     expect(cityTextBox).toHaveValue(BerlinGermanySuggestion.textContent);
   });
 
-  
+
+});
+
+
+describe('<CitySearch /> integration', () => {
+
+  test('renders suggestions list when the app is rendered.', async () => {
+    const user = userEvent.setup();
+    const AppComponent = render(<App />);
+    const AppDOM = AppComponent.container.firstChild;
+
+    const CitySearchDOM = AppDOM.querySelector('#city-search');
+    const cityTextBox = within(CitySearchDOM).queryByRole('textbox');
+    await user.click(cityTextBox);
+
+    const allEvents = await getEvents();
+    const allLocations = extractLocations(allEvents);
+
+    const suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem');
+    expect(suggestionListItems.length).toBe(allLocations.length + 1);
+  });
+
 });
 
 
 
-/**
- * We fixed test for App + CitySearch
- * We know how to look at the error in console
- * We know how to console log step by step
- * We know how to run one file of test: npm run test -- CitySearch.test.js
- * We know how to run one test in the file: test.only
- * You can apply the same for: 1. NumberOfEvents, 2.EventList, 3. Event
- * For each test:
- *  - Detect element: make sure element is in the DOM + element has the correct class name (Basic)
- *  - Simulate event: user.type or user.click (Intermediate)
- *  - Expect the result
- */

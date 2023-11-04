@@ -61,11 +61,18 @@ describe('<Event /> Component', () => {
   });
 
   test('has the events description', () => {
-    const eventDOM = EventComponent.container.firstChild;
-    const details = eventDOM.querySelector('.detailsOpened');
     const descriptionElement = EventComponent.queryByText(mockEvent.description);
     expect(descriptionElement).not.toBeInTheDocument();
-
+    const button = EventComponent.queryByText('show details');
+    const user = userEvent.setup();
+    const eventDOM = EventComponent.container.firstChild;
+    const details = eventDOM.querySelector('.detailsClosed');
+    expect(details).toBeInTheDocument();
   });
+
+
+    
+   
+ 
 });
 
