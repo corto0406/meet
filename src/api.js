@@ -1,4 +1,4 @@
-import { mockData } from './mock-data';
+import mockData from './mock-data';
 
 /**
  *
@@ -58,7 +58,7 @@ export const extractLocations = (events) => {
  */
 export const getEvents = async () => {
   if (window.location.href.startsWith("http://localhost")) {
-    return mockData;
+    return mockData.items;
   }
 
   const token = await getAccessToken();

@@ -1,4 +1,4 @@
-export const mockData= {
+const mockData = {
   "kind": "calendar#events",
   "etag": "\"p3208f36npbdo20o\"",
   "summary": "fullstackwebdev@careerfoundry.com",
@@ -956,6 +956,6 @@ export const mockData= {
     }
   ]
 };
-
+export default mockData
 
 
