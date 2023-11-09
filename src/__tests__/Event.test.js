@@ -60,19 +60,18 @@ describe('<Event /> Component', () => {
     expect(details).toBeInTheDocument();
   });
 
-  test('has the events description', () => {
+  test('has the events description', async () => {
     const descriptionElement = EventComponent.queryByText(mockEvent.description);
     expect(descriptionElement).not.toBeInTheDocument();
-    const button = EventComponent.queryByText('show details');
     const user = userEvent.setup();
+    const button = EventComponent.queryByText('show details');
+    await user.click(button);
     const eventDOM = EventComponent.container.firstChild;
-    const details = eventDOM.querySelector('.detailsClosed');
+    const details = eventDOM.querySelector('.detailsOpened');
     expect(details).toBeInTheDocument();
+    
   });
 
 
-    
-   
- 
 });
 
