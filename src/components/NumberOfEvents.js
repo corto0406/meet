@@ -4,19 +4,18 @@ const NumberOfEvents = ({ setNumberOfEvents, setErrorAlert }) => {
   const [value, setValue] = useState("32");
 
   const handleInputChanged = (event) => {
-    const value = event.target.value;
-    setNumberOfEvents(value);
+    const newValue = event.target.value;
+    setValue(newValue);
     let errorText;
-    if (isNaN(value) || value <= 0) {
-      errorText = "only positive number are valid";
+    if (isNaN(newValue) || newValue <= 0) {
+      errorText = "only positive numbers are valid";
       setErrorAlert(errorText);
     } else {
       errorText = "";
       setErrorAlert(errorText);
-      setNumberOfEvents(value);
+      setNumberOfEvents(newValue);
     }
   };
-
 
   return (
     <div id="number-of-events">

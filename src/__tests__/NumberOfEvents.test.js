@@ -23,6 +23,6 @@ describe('<NumberOfEvents /> Component', () => {
   test('updates number of events when user types', async () => {
     const input = NumberOfEventsComponent.queryByRole('textbox');
     await userEvent.type(input, '{backspace}{backspace}10');
-    expect(input).toHaveValue('32');
+    expect(input).toHaveValue('10');
   });
 });

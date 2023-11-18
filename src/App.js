@@ -13,7 +13,7 @@ const App = () => {
   const [events, setEvents] = useState([]);
   const [currentCity, setCurrentCity] = useState("See all cities");
   const [infoAlert, setInfoAlert] = useState("");
-  const [ErrorAlert, setErrorAlert] = useState("");
+  const [errorAlertText, setErrorAlertText] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -38,15 +38,15 @@ const App = () => {
     <div className="App">
       <div className="alerts-container">
         {infoAlert.length ? <InfoAlert text={infoAlert} /> : null}
-        {ErrorAlert.length ? <ErrorAlert text={ErrorAlert} /> : null}
+        {errorAlertText.length ? <ErrorAlert text={errorAlertText} /> : null}
       </div>
       <CitySearch
         allLocations={allLocations}
         setCurrentCity={setCurrentCity}
         setInfoAlert={setInfoAlert} />
-      <NumberOfEvents 
-      setNumberOfEvents={setNumberOfEvents}
-      setErrorAlert={setErrorAlert} />
+      <NumberOfEvents
+        setNumberOfEvents={setNumberOfEvents}
+        setErrorAlert={setErrorAlertText} />
       <EventList events={events} />
     </div>
   );
