@@ -4,7 +4,7 @@ let browser;
 let page;
 
 // Set a higher timeout for the entire test suite
-jest.setTimeout(120000); // Increase the timeout for the entire suite to 120 seconds
+jest.setTimeout(10000); // Increase the timeout for the entire suite to 120 seconds
 
 // Setup before all tests
 beforeAll(async () => {
@@ -13,7 +13,7 @@ beforeAll(async () => {
     browser = await puppeteer.launch({
       headless: false,
       slowMo: 250,
-      timeout: 0,
+      timeout: 3000,
     });
 
     // Create a new page
