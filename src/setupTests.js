@@ -1,4 +1,3 @@
-
 import '@testing-library/jest-dom';
 
 // Here, add portions of the warning messages you want to intentionally prevent from appearing
@@ -14,4 +13,19 @@ console.error = (...args) => {
   const ignoreMessage = MESSAGES_TO_IGNORE.find(message => args.toString().includes(message));
   if (!ignoreMessage) originalError(...args);
 };
+const { ResizeObserver } = window;
 
+beforeEach(() => {
+  //@ts-ignore
+  delete window.ResizeObserver;
+  window.ResizeObserver = jest.fn().mockImplementation(() => ({
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+  }));
+});
+
+afterEach(() => {
+  window.ResizeObserver = ResizeObserver;
+  jest.restoreAllMocks();
+});
