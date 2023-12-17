@@ -1,30 +1,108 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:500);
 
-/* City Boxes */
-.city-box {
-  background: linear-gradient(135deg, #3498db, #2ecc71);
-  color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 20px;
-  margin: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease-in-out;
+body {
+  text-align: center;
+  padding: 2% 5%;
+  background-color:whitesmoke;
+  color: #0c0c0c;
 }
 
-.city-box:hover {
-  transform: scale(1.05);
+body * {
+  box-sizing: border-box;
+  display: grid;
+}
+.App {
+  text-align: center;
+  padding: 2% 5%;
+  background-color:whitesmoke
 }
 
-.city-title {
-  font-size: 24px;
-  font-weight: bold;
+.App * {
+  box-sizing: border-box;
+  display: grid;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+p {
+  margin: 5px 0;
+}
+
+input[type="text"],
+input[type="number"] {
+  padding: 8px 6px 8px 10px;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  line-height: 20px;
+  align-self: center;
+  height: 38px;
+  margin-bottom: 20px;
+  color: #1e1a3b;
+}
+
+#city-search,
+#number-of-events {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  position: relative;
+}
+
+.suggestions {
+  width: 250px;
+  position: absolute;
+  top: 45px;
+  z-index: 2;
+  align-self: center;
+  margin: 0;
+  font-size: 14px;
+  box-shadow: 10px 10px 16px -12px rgba(0, 0, 0, 0.75);
+}
+
+.suggestions > li {
+  text-align: left;
+  padding: 8px 6px 8px 10px;
+  background-color: #eee;
+  cursor: default;
+}
+
+.suggestions > li:last-child {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.suggestions > li:hover {
+  background-color: #bcdcdb;
+}
+
+.event {
+  padding: 20px 20px 35px;
   margin-bottom: 10px;
+  text-align: left;
+  border: 1px solid #272525;
+  border-radius: 4px;
+  position: relative;
+  background-color: #312e31;
 }
 
-.city-description {
-  font-size: 16px;
-  line-height: 1.4;
+.event-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e1a3b;
+}
+
+.event-infos {
+  font-size: 1.5rem;
+  margin: 20px 0;
+}
+
+.details-btn {
+  display: none; /* Hide the details button */
 }
 
 .alerts-container {
@@ -35,19 +113,41 @@
   z-index: 1000;
 }
 
+.title-box {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #151515;
+}
+
+.subtitle {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #161516;
+}
+
+.graph-title {
+  margin-top: 90px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #9f7ccb;
+}
+
+.charts-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
 @media (max-width: 768px) {
   .charts-container {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: center;
   }
-}
-
-
-.city-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.city {
-  margin: 10px;
 }
 
